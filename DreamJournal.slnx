@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="TODO.md" />
+  </Folder>
   <Project Path="DreamJournal.Application/DreamJournal.Application.csproj" />
   <Project Path="DreamJournal.Domain/DreamJournal.Domain.csproj" />
   <Project Path="DreamJournal.Infrastructure/DreamJournal.Infrastructure.csproj" />

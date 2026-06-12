@@ -5,7 +5,8 @@
 @using System.Text.Encodings.Web
 @using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.WebUtilities
-@using DreamJournal.Web.Data
+@using DreamJournal.Infrastructure.Identity
+@using DreamJournal.Domain.Enums
 
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserStore<ApplicationUser> UserStore
@@ -42,6 +43,66 @@
                 <label for="Input.ConfirmPassword">Confirm Password</label>
                 <ValidationMessage For="() => Input.ConfirmPassword" class="text-danger" />
             </div>
+
+            @* My Entries *@
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.FirstName" id="Input.FirstName" class="form-control" aria-required="true" placeholder="First Name" />
+                <label for="Input.FirstName">First Name</label>
+                <ValidationMessage For="() => Input.FirstName" class="text-danger" />
+            </div>
+
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.MiddleName" id="Input.MiddleName" class="form-control" aria-required="true" placeholder="Middle Name (optional)" />
+                <label for="Input.MiddleName">Middle Name</label>
+                <ValidationMessage For="() => Input.MiddleName" class="text-danger" />
+            </div>
+
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.LastName" id="Input.LastName" class="form-control" aria-required="true" placeholder="Last Name" />
+                <label for="Input.LastName">Last Name</label>
+                <ValidationMessage For="() => Input.LastName" class="text-danger" />
+            </div>
+
+            <div class="form-floating mb-3">
+                <InputDate @bind-Value="Input.BirthDate" id="Input.BirthDate" class="form-control" aria-required="true" placeholder="" />
+                <label for="Input.BirthDate">Birth Date</label>
+                <ValidationMessage For="() => Input.BirthDate" class="text-danger" />
+            </div>
+
+            <div class="form-floating mb-3">
+                <InputSelect @bind-Value="Input.ReligiousAffiliation" id="Input.ReligiousAffiliation" class="form-control" aria-required="true" placeholder="">
+                <option value="">-- Religious Affiliation --"</option>
+                @foreach(var religionAffiliation in Enum.GetValues<ReligiousAffiliationEnum>())
+                {
+                    <option value="@religionAffiliation">@religionAffiliation</option>
+                }
+                </InputSelect>
+                <label for="Input.ReligiousAffiliation">Religious Affiliation</label>
+                <ValidationMessage For="() => Input.ReligiousAffiliation" class="text-danger" />
+            </div>
+
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.City" id="Input.City" class="form-control" aria-required="true" placeholder="City" />
+                <label for="Input.City">City</label>
+                <ValidationMessage For="() => Input.City" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.State" id="Input.State" class="form-control" aria-required="true" placeholder="State" />
+                <label for="Input.State">State</label>
+                <ValidationMessage For="() => Input.State" class="text-danger" />
+            </div>
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.ZipCode" id="Input.ZipCode" class="form-control" aria-required="true" placeholder="Zip Code" />
+                <label for="Input.ZipCode">Zip Code</label>
+                <ValidationMessage For="() => Input.ZipCode" class="text-danger" />
+            </div>
+
+            <div class="form-floating mb-3">
+                <InputText @bind-Value="Input.Country" id="Input.Country" class="form-control" aria-required="true" placeholder="Country" />
+                <label for="Input.Country">Country</label>
+                <ValidationMessage For="() => Input.Country" class="text-danger" />
+            </div>
+
             <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </EditForm>
     </div>
@@ -77,7 +138,19 @@
         await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
         var emailStore = GetEmailStore();
         await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-        var result = await UserManager.CreateAsync(user, Input.Password);
+
+        // Custom attributes
+        user.FirstName = Input.FirstName;
+        user.MiddleName = Input.MiddleName;
+        user.LastName = Input.LastName;
+        user.BirthDate = Input.BirthDate;
+        user.ReligiousAffiliation = Input.ReligiousAffiliation;
+        user.City = Input.City;
+        user.State = Input.State;
+        user.ZipCode = Input.ZipCode;
+        user.Country = Input.Country;
+
+        var result = await UserManager.CreateAsync(user, Input.Password);       
 
         if (!result.Succeeded)
         {
@@ -148,5 +221,51 @@
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; } = "";
+
+        [Required]
+        [Display(Name = "First Name")]
+        [StringLength(80, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+        public string FirstName { get; set; } = string.Empty;
+
+        // Not Required
+        [Display(Name = "Middle Name")]
+        [StringLength(80, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+        public string MiddleName { get; set; } = string.Empty;
+
+        [Required]
+        [Display(Name = "Last Name")]
+        [StringLength(80, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+        public string LastName { get; set; } = string.Empty;
+
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Birth Date")]
+        public DateTime BirthDate {get;set;}
+
+        [Required]
+        [Display(Name = "Religious Affiliation")]
+        public ReligiousAffiliationEnum? ReligiousAffiliation { get; set; }
+
+        [Required]
+        [Display(Name = "City")]
+        [StringLength(80, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+        public string City { get; set; } = string.Empty;
+
+        [Required]
+        [Display(Name = "State")]
+        [StringLength(80, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+        public string State { get; set; } = string.Empty;
+
+        [Required]
+        [Display(Name = "Zip Code")]
+        [StringLength(80, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+        public string ZipCode { get; set; } = string.Empty;
+
+        [Required]
+        [Display(Name = "Country")]
+        [StringLength(80, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+        public string Country { get; set; } = string.Empty;
+
+
     }
 }

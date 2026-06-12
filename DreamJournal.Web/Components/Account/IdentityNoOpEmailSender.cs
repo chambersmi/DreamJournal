@@ -1,4 +1,4 @@
-using DreamJournal.Web.Data;
+using DreamJournal.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
