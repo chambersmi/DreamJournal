@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="DreamJournal.Application/DreamJournal.Application.csproj" />
+  <Project Path="DreamJournal.Domain/DreamJournal.Domain.csproj" />
+  <Project Path="DreamJournal.Infrastructure/DreamJournal.Infrastructure.csproj" />
+  <Project Path="DreamJournal.Web/DreamJournal.Web.csproj" />
+</Solution>
