@@ -16,9 +16,9 @@ namespace DreamJournal.Infrastructure.Identity
 
         public string City { get; set; } = null!;
 
-        public string State { get; set; } = null!;
+        public StateEnum State { get; set; }
         public string ZipCode { get; set; } = null!;
-        public string Country { get; set; } = null!;
+        public CountryEnum Country { get; set; }
 
     }
 

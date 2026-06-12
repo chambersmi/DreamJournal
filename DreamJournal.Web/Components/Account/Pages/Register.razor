@@ -7,6 +7,7 @@
 @using Microsoft.AspNetCore.WebUtilities
 @using DreamJournal.Infrastructure.Identity
 @using DreamJournal.Domain.Enums
+@using DreamJournal.Domain.Extensions
 
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserStore<ApplicationUser> UserStore
@@ -71,7 +72,7 @@
 
             <div class="form-floating mb-3">
                 <InputSelect @bind-Value="Input.ReligiousAffiliation" id="Input.ReligiousAffiliation" class="form-control" aria-required="true" placeholder="">
-                <option value="">-- Religious Affiliation --"</option>
+                <option value="">-- Religious Affiliation --</option>
                 @foreach(var religionAffiliation in Enum.GetValues<ReligiousAffiliationEnum>())
                 {
                     <option value="@religionAffiliation">@religionAffiliation</option>
@@ -86,11 +87,19 @@
                 <label for="Input.City">City</label>
                 <ValidationMessage For="() => Input.City" class="text-danger" />
             </div>
+
             <div class="form-floating mb-3">
-                <InputText @bind-Value="Input.State" id="Input.State" class="form-control" aria-required="true" placeholder="State" />
+                <InputSelect @bind-Value="Input.State" id="Input.State" class="form-control" aria-required="true" placeholder="">
+                    <option value="">-- State --</option>
+                    @foreach (var state in Enum.GetValues<StateEnum>())
+                    {
+                        <option value="@state">@state.ToDescriptionString()</option>
+                    }
+                </InputSelect>
                 <label for="Input.State">State</label>
                 <ValidationMessage For="() => Input.State" class="text-danger" />
             </div>
+
             <div class="form-floating mb-3">
                 <InputText @bind-Value="Input.ZipCode" id="Input.ZipCode" class="form-control" aria-required="true" placeholder="Zip Code" />
                 <label for="Input.ZipCode">Zip Code</label>
@@ -98,9 +107,15 @@
             </div>
 
             <div class="form-floating mb-3">
-                <InputText @bind-Value="Input.Country" id="Input.Country" class="form-control" aria-required="true" placeholder="Country" />
-                <label for="Input.Country">Country</label>
-                <ValidationMessage For="() => Input.Country" class="text-danger" />
+                <InputSelect @bind-Value="Input.Country" id="Input.Country" class="form-control" aria-required="true" placeholder="">
+                    <option value="">-- Country --</option>
+                    @foreach (var country in Enum.GetValues<CountryEnum>())
+                    {
+                        <option value="@country">@country.ToDescriptionString()</option>
+                    }
+                </InputSelect>
+                <label for="Input.State">State</label>
+                <ValidationMessage For="() => Input.State" class="text-danger" />
             </div>
 
             <button type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
@@ -240,7 +255,7 @@
         [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Birth Date")]
-        public DateTime BirthDate {get;set;}
+        public DateTime BirthDate { get; set; } = DateTime.Now;
 
         [Required]
         [Display(Name = "Religious Affiliation")]
@@ -253,8 +268,8 @@
 
         [Required]
         [Display(Name = "State")]
-        [StringLength(80, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
-        public string State { get; set; } = string.Empty;
+        //[StringLength(80, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+        public StateEnum State { get; set; }
 
         [Required]
         [Display(Name = "Zip Code")]
@@ -263,8 +278,8 @@
 
         [Required]
         [Display(Name = "Country")]
-        [StringLength(80, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
-        public string Country { get; set; } = string.Empty;
+        //[StringLength(80, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+        public CountryEnum Country { get; set; }
 
 
     }
