@@ -1,13 +1,11 @@
 ﻿@page "/Account/Register"
 
 @using System.ComponentModel.DataAnnotations
-@using System.Text
-@using System.Text.Encodings.Web
-@using Microsoft.AspNetCore.Identity
-@using Microsoft.AspNetCore.WebUtilities
-@using DreamJournal.Infrastructure.Identity
 @using DreamJournal.Domain.Enums
 @using DreamJournal.Domain.Extensions
+@using DreamJournal.Infrastructure.Identity
+@using Microsoft.AspNetCore.Identity
+@using System.Globalization
 
 @inject UserManager<ApplicationUser> UserManager
 @inject IUserStore<ApplicationUser> UserStore
@@ -24,6 +22,7 @@
 <div class="row">
     <div class="col-lg-6">
         <StatusMessage Message="@Message" />
+
         <EditForm Model="Input" method="post" OnValidSubmit="RegisterUser" FormName="register">
             <DataAnnotationsValidator />
             <h2>Create a new account.</h2>
@@ -46,6 +45,23 @@
             </div>
 
             @* My Entries *@
+
+            @* Custom User Name *@
+            <div class="form-floating mb-3">
+                <InputText 
+                    @bind-Value="Input.CustomUserName"    
+                    Name="Input.CustomUserName"
+                    id="Input.FirstName" 
+                    class="form-control" 
+                    aria-required="true" 
+                    placeholder="User Name" 
+                 />
+
+                <label for="Input.CustomUserName">First Name</label>
+                <ValidationMessage For="() => Input.CustomUserName" class="text-danger" />
+            </div>
+
+
             <div class="form-floating mb-3">
                 <InputText @bind-Value="Input.FirstName" id="Input.FirstName" class="form-control" aria-required="true" placeholder="First Name" />
                 <label for="Input.FirstName">First Name</label>
@@ -72,11 +88,11 @@
 
             <div class="form-floating mb-3">
                 <InputSelect @bind-Value="Input.ReligiousAffiliation" id="Input.ReligiousAffiliation" class="form-control" aria-required="true" placeholder="">
-                <option value="">-- Religious Affiliation --</option>
-                @foreach(var religionAffiliation in Enum.GetValues<ReligiousAffiliationEnum>())
-                {
-                    <option value="@religionAffiliation">@religionAffiliation</option>
-                }
+                    <option value="">-- Religious Affiliation --</option>
+                    @foreach (var religionAffiliation in Enum.GetValues<ReligiousAffiliationEnum>())
+                    {
+                        <option value="@religionAffiliation">@religionAffiliation</option>
+                    }
                 </InputSelect>
                 <label for="Input.ReligiousAffiliation">Religious Affiliation</label>
                 <ValidationMessage For="() => Input.ReligiousAffiliation" class="text-danger" />
@@ -141,16 +157,42 @@
 
     private string? Message => identityErrors is null ? null : $"Error: {string.Join(", ", identityErrors.Select(error => error.Description))}";
 
-    protected override void OnInitialized()
+    /// <summary>
+    /// MCNOTE: This sets the anonymous username on page load. If a user wants to go with the randomly generated username, they can see it right away.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnInitializedAsync()
     {
-        Input ??= new();
+        Input ??= new InputModel();
+
+        if(string.IsNullOrWhiteSpace(Input.CustomUserName))
+        {
+            Input.CustomUserName = await GenerateUniqueAnonymousUsernameAsync(); 
+        }
+
     }
 
     public async Task RegisterUser(EditContext editContext)
     {
         var user = CreateUser();
+        TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
 
-        await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+
+        var existing = await UserManager.FindByNameAsync(Input.CustomUserName);
+        Console.WriteLine("\n\n\n\n\n\n\n\n****************************** " + Input.CustomUserName);
+        if (existing != null)
+        {
+            identityErrors = new[] { 
+                new IdentityError 
+                { 
+                    Description = $"The username '{Input.CustomUserName}' is already taken. Please try another one."
+                } 
+            };
+            return;
+        }
+
+        //await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+        await UserStore.SetUserNameAsync(user, Input.CustomUserName, CancellationToken.None);
         var emailStore = GetEmailStore();
         await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
@@ -165,7 +207,10 @@
         user.ZipCode = Input.ZipCode;
         user.Country = Input.Country;
 
-        var result = await UserManager.CreateAsync(user, Input.Password);       
+        // MCNOTE: Set email to confirmed for testing
+        user.EmailConfirmed = true;
+
+        var result = await UserManager.CreateAsync(user, Input.Password);
 
         if (!result.Succeeded)
         {
@@ -175,26 +220,92 @@
 
         Logger.LogInformation("User created a new account with password.");
 
-        var userId = await UserManager.GetUserIdAsync(user);
-        var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
-        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-        var callbackUrl = NavigationManager.GetUriWithQueryParameters(
-            NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
-            new Dictionary<string, object?> { ["userId"] = userId, ["code"] = code, ["returnUrl"] = ReturnUrl });
+        // MCNOTE: Email Sender. Commented out for dev purposes
 
-        await EmailSender.SendConfirmationLinkAsync(user, Input.Email, HtmlEncoder.Default.Encode(callbackUrl));
+        // var userId = await UserManager.GetUserIdAsync(user);
+        // var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
+        // code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+        // var callbackUrl = NavigationManager.GetUriWithQueryParameters(
+        //     NavigationManager.ToAbsoluteUri("Account/ConfirmEmail").AbsoluteUri,
+        //     new Dictionary<string, object?> { ["userId"] = userId, ["code"] = code, ["returnUrl"] = ReturnUrl });
 
-        if (UserManager.Options.SignIn.RequireConfirmedAccount)
+        // await EmailSender.SendConfirmationLinkAsync(user, Input.Email, HtmlEncoder.Default.Encode(callbackUrl));
+
+        // if (UserManager.Options.SignIn.RequireConfirmedAccount)
+        // {
+        //     RedirectManager.RedirectTo(
+        //         "Account/RegisterConfirmation",
+        //         new() { ["email"] = Input.Email, ["returnUrl"] = ReturnUrl });
+        // }
+        // else
+        // {
+
+        // MCNOTE: Log user directly in
+        await SignInManager.SignInAsync(user, isPersistent: false);
+        RedirectManager.RedirectTo(ReturnUrl);
+        //}
+    }
+
+    private async Task<string> GenerateUniqueAnonymousUsernameAsync()
+    {
+        string[] Adjectives = { "Sleepy",
+              "Tired",
+              "Dopey",
+              "Hungry",
+              "Grumpy",
+              "Happy",
+              "Bashful",
+              "Chill",
+              "Lazy",
+              "Clumsy",
+              "Cranky",
+              "Gloomy" 
+    };
+
+        string[] AnimalNouns = {
+          "Badger",
+          "Beaver",
+          "Ferret",
+          "Gopher",
+          "Otter",
+          "Porcupine",
+          "Raccoon",
+          "Squirrel",
+          "Weasel",
+          "Wombat"
+    };
+
+        Random random = new();
+        string generatedName = "";
+        bool isUnique = false;
+        int attemptsCounter = 0; // Prevents infinite loops
+        const int MAX_ATTEMPTS = 50;
+        const int MAX_USER_NUMBER = 500;
+
+        do
         {
-            RedirectManager.RedirectTo(
-                "Account/RegisterConfirmation",
-                new() { ["email"] = Input.Email, ["returnUrl"] = ReturnUrl });
-        }
-        else
-        {
-            await SignInManager.SignInAsync(user, isPersistent: false);
-            RedirectManager.RedirectTo(ReturnUrl);
-        }
+            string adjective = Adjectives[random.Next(Adjectives.Length)];
+            string animal = AnimalNouns[random.Next(AnimalNouns.Length)];
+            int number = random.Next(1, MAX_USER_NUMBER); // 1 to 10000
+
+            generatedName = $"{adjective}{animal}{number}";
+
+            var existingUser = await UserManager.FindByNameAsync(generatedName);
+            if (existingUser == null)
+            {
+                isUnique = true;
+            }
+
+            attemptsCounter++;
+
+            if (attemptsCounter > MAX_ATTEMPTS)
+            {
+                generatedName += random.Next(100, 999).ToString();
+                break;
+            }
+        } while (!isUnique);
+
+        return generatedName;
     }
 
     private ApplicationUser CreateUser()
@@ -221,6 +332,8 @@
 
     private sealed class InputModel
     {
+        public bool IsGeneratedName {get;set;} = true;
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -238,13 +351,17 @@
         public string ConfirmPassword { get; set; } = "";
 
         [Required]
+        [Display(Name = "User Name")]
+        [StringLength(30, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 3)]
+        public string? CustomUserName { get; set; }
+
+        [Required]
         [Display(Name = "First Name")]
         [StringLength(80, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
         public string FirstName { get; set; } = string.Empty;
 
         // Not Required
-        [Display(Name = "Middle Name")]
-        [StringLength(80, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+        [Display(Name = "Middle Name")]        
         public string MiddleName { get; set; } = string.Empty;
 
         [Required]
@@ -273,14 +390,12 @@
 
         [Required]
         [Display(Name = "Zip Code")]
-        [StringLength(80, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
+        [StringLength(12, ErrorMessage = "The {0} cannot exceed {1} characters.", MinimumLength = 3)]
         public string ZipCode { get; set; } = string.Empty;
 
         [Required]
         [Display(Name = "Country")]
         //[StringLength(80, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 1)]
         public CountryEnum Country { get; set; }
-
-
     }
 }

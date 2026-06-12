@@ -5,11 +5,10 @@ using System.Text;
 
 namespace DreamJournal.Domain.Enums
 {
-
     public enum CountryEnum
     {
         // ISO 3166-1 Country Codes
-        // --- Top 5 Priority Defaults (Value-Mapped) ---
+
         [Description("United States")]
         US = 0,
 
