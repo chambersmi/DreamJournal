@@ -8,594 +8,596 @@ namespace DreamJournal.Domain.Enums
 
     public enum CountryEnum
     {
-        // --- Top 5 Priority Defaults ---
+        // ISO 3166-1 Country Codes
+        // --- Top 5 Priority Defaults (Value-Mapped) ---
         [Description("United States")]
-        UnitedStates = 0,
+        US = 0,
 
         [Description("United Kingdom")]
-        UnitedKingdom = 1,
+        GB = 1,
 
         [Description("Canada")]
-        Canada = 2,
+        CA = 2,
 
         [Description("Australia")]
-        Australia = 3,
+        AU = 3,
 
         [Description("Germany")]
-        Germany = 4,
+        DE = 4,
 
-        // --- Alphabetical List (Excluding the 5 above) ---
+        // --- Alphabetical ISO Alpha-2 List (Excluding top 5) ---
         [Description("Afghanistan")]
-        Afghanistan,
+        AF,
 
         [Description("Albania")]
-        Albania,
+        AL,
 
         [Description("Algeria")]
-        Algeria,
+        DZ,
 
         [Description("Andorra")]
-        Andorra,
+        AD,
 
         [Description("Angola")]
-        Angola,
+        AO,
 
         [Description("Antigua and Barbuda")]
-        AntiguaAndBarbuda,
+        AG,
 
         [Description("Argentina")]
-        Argentina,
+        AR,
 
         [Description("Armenia")]
-        Armenia,
+        AM,
 
         [Description("Austria")]
-        Austria,
+        AT,
 
         [Description("Azerbaijan")]
-        Azerbaijan,
+        AZ,
 
         [Description("Bahamas")]
-        Bahamas,
+        BS,
 
         [Description("Bahrain")]
-        Bahrain,
+        BH,
 
         [Description("Bangladesh")]
-        Bangladesh,
+        BD,
 
         [Description("Barbados")]
-        Barbados,
+        BB,
 
         [Description("Belarus")]
-        Belarus,
+        BY,
 
         [Description("Belgium")]
-        Belgium,
+        BE,
 
         [Description("Belize")]
-        Belize,
+        BZ,
 
         [Description("Benin")]
-        Benin,
+        BJ,
 
         [Description("Bhutan")]
-        Bhutan,
+        BT,
 
         [Description("Bolivia")]
-        Bolivia,
+        BO,
 
         [Description("Bosnia and Herzegovina")]
-        BosniaAndHerzegovina,
+        BA,
 
         [Description("Botswana")]
-        Botswana,
+        BW,
 
         [Description("Brazil")]
-        Brazil,
+        BR,
 
         [Description("Brunei")]
-        Brunei,
+        BN,
 
         [Description("Bulgaria")]
-        Bulgaria,
+        BG,
 
         [Description("Burkina Faso")]
-        BurkinaFaso,
+        BF,
 
         [Description("Burundi")]
-        Burundi,
+        BI,
 
         [Description("Cabo Verde")]
-        CaboVerde,
+        CV,
 
         [Description("Cambodia")]
-        Cambodia,
+        KH,
 
         [Description("Cameroon")]
-        Cameroon,
+        CM,
 
         [Description("Central African Republic")]
-        CentralAfricanRepublic,
+        CF,
 
         [Description("Chad")]
-        Chad,
+        TD,
 
         [Description("Chile")]
-        Chile,
+        CL,
 
         [Description("China")]
-        China,
+        CN,
 
         [Description("Colombia")]
-        Colombia,
+        CO,
 
         [Description("Comoros")]
-        Comoros,
+        KM,
 
         [Description("Congo (Brazzaville)")]
-        CongoBrazzaville,
+        CG,
 
         [Description("Congo (Kinshasa)")]
-        CongoKinshasa,
+        CD,
 
         [Description("Costa Rica")]
-        CostaRica,
+        CR,
 
         [Description("Côte d'Ivoire")]
-        CoteDIvoire,
+        CI,
 
         [Description("Croatia")]
-        Croatia,
+        HR,
 
         [Description("Cuba")]
-        Cuba,
+        CU,
 
         [Description("Cyprus")]
-        Cyprus,
+        CY,
 
         [Description("Czech Republic")]
-        CzechRepublic,
+        CZ,
 
         [Description("Denmark")]
-        Denmark,
+        DK,
 
         [Description("Djibouti")]
-        Djibouti,
+        DJ,
 
         [Description("Dominica")]
-        Dominica,
+        DM,
 
         [Description("Dominican Republic")]
-        DominicanRepublic,
+        DO,
 
         [Description("East Timor")]
-        EastTimor,
+        TL,
 
         [Description("Ecuador")]
-        Ecuador,
+        EC,
 
         [Description("Egypt")]
-        Egypt,
+        EG,
 
         [Description("El Salvador")]
-        ElSalvador,
+        SV,
 
         [Description("Equatorial Guinea")]
-        EquatorialGuinea,
+        GQ,
 
         [Description("Eritrea")]
-        Eritrea,
+        ER,
 
         [Description("Estonia")]
-        Estonia,
+        EE,
 
         [Description("Eswatini")]
-        Eswatini,
+        SZ,
 
         [Description("Ethiopia")]
-        Ethiopia,
+        ET,
 
         [Description("Fiji")]
-        Fiji,
+        FJ,
 
         [Description("Finland")]
-        Finland,
+        FI,
 
         [Description("France")]
-        France,
+        FR,
 
         [Description("Gabon")]
-        Gabon,
+        GA,
 
         [Description("Gambia")]
-        Gambia,
+        GM,
 
         [Description("Georgia")]
-        Georgia,
+        GE,
 
         [Description("Ghana")]
-        Ghana,
+        GH,
 
         [Description("Greece")]
-        Greece,
+        GR,
 
         [Description("Grenada")]
-        Grenada,
+        GD,
 
         [Description("Guatemala")]
-        Guatemala,
+        GT,
 
         [Description("Guinea")]
-        Guinea,
+        GN,
 
         [Description("Guinea-Bissau")]
-        GuineaBissau,
+        GW,
 
         [Description("Guyana")]
-        Guyana,
+        GY,
 
         [Description("Haiti")]
-        Haiti,
+        HT,
 
         [Description("Honduras")]
-        Honduras,
+        HN,
 
         [Description("Hungary")]
-        Hungary,
+        HU,
 
         [Description("Iceland")]
-        Iceland,
+        IS,
 
         [Description("India")]
-        India,
+        IN,
 
         [Description("Indonesia")]
-        Indonesia,
+        ID,
 
         [Description("Iran")]
-        Iran,
+        IR,
 
         [Description("Iraq")]
-        Iraq,
+        IQ,
 
         [Description("Ireland")]
-        Ireland,
+        IE,
 
         [Description("Israel")]
-        Israel,
+        IL,
 
         [Description("Italy")]
-        Italy,
+        IT,
 
         [Description("Jamaica")]
-        Jamaica,
+        JM,
 
         [Description("Japan")]
-        Japan,
+        JP,
 
         [Description("Jordan")]
-        Jordan,
+        JO,
 
         [Description("Kazakhstan")]
-        Kazakhstan,
+        KZ,
 
         [Description("Kenya")]
-        Kenya,
+        KE,
 
         [Description("Kiribati")]
-        Kiribati,
+        KI,
 
         [Description("Kuwait")]
-        Kuwait,
+        KW,
 
         [Description("Kyrgyzstan")]
-        Kyrgyzstan,
+        KG,
 
         [Description("Laos")]
-        Laos,
+        LA,
 
         [Description("Latvia")]
-        Latvia,
+        LV,
 
         [Description("Lebanon")]
-        Lebanon,
+        LB,
 
         [Description("Lesotho")]
-        Lesotho,
+        LS,
 
         [Description("Liberia")]
-        Liberia,
+        LR,
 
         [Description("Libya")]
-        Libya,
+        LY,
 
         [Description("Liechtenstein")]
-        Liechtenstein,
+        LI,
 
         [Description("Lithuania")]
-        Lithuania,
+        LT,
 
         [Description("Luxembourg")]
-        Luxembourg,
+        LU,
 
         [Description("Madagascar")]
-        Madagascar,
+        MG,
 
         [Description("Malawi")]
-        Malawi,
+        MW,
 
         [Description("Malaysia")]
-        Malaysia,
+        MY,
 
         [Description("Maldives")]
-        Maldives,
+        MV,
 
         [Description("Mali")]
-        Mali,
+        ML,
 
         [Description("Malta")]
-        Malta,
+        MT,
 
         [Description("Marshall Islands")]
-        MarshallIslands,
+        MH,
 
         [Description("Mauritania")]
-        Mauritania,
+        MR,
 
         [Description("Mauritius")]
-        Mauritius,
+        MU,
 
         [Description("Mexico")]
-        Mexico,
+        MX,
 
         [Description("Micronesia")]
-        Micronesia,
+        FM,
 
         [Description("Moldova")]
-        Moldova,
+        MD,
 
         [Description("Monaco")]
-        Monaco,
+        MC,
 
         [Description("Mongolia")]
-        Mongolia,
+        MN,
 
         [Description("Montenegro")]
-        Montenegro,
+        ME,
 
         [Description("Morocco")]
-        Morocco,
+        MA,
 
         [Description("Mozambique")]
-        Mozambique,
+        MZ,
 
         [Description("Myanmar")]
-        Myanmar,
+        MM,
 
         [Description("Namibia")]
-        Namibia,
+        NA,
 
         [Description("Nauru")]
-        Nauru,
+        NR,
 
         [Description("Nepal")]
-        Nepal,
+        NP,
 
         [Description("Netherlands")]
-        Netherlands,
+        NL,
 
         [Description("New Zealand")]
-        NewZealand,
+        NZ,
 
         [Description("Nicaragua")]
-        Nicaragua,
+        NI,
 
         [Description("Niger")]
-        Niger,
+        NE,
 
         [Description("Nigeria")]
-        Nigeria,
+        NG,
 
         [Description("North Korea")]
-        NorthKorea,
+        KP,
 
         [Description("North Macedonia")]
-        NorthMacedonia,
+        MK,
 
         [Description("Norway")]
-        Norway,
+        NO,
 
         [Description("Oman")]
-        Oman,
+        OM,
 
         [Description("Pakistan")]
-        Pakistan,
+        PK,
 
         [Description("Palau")]
-        Palau,
+        PW,
 
         [Description("Palestine")]
-        Palestine,
+        PS,
 
         [Description("Panama")]
-        Panama,
+        PA,
 
         [Description("Papua New Guinea")]
-        PapuaNewGuinea,
+        PG,
 
         [Description("Paraguay")]
-        Paraguay,
+        PY,
 
         [Description("Peru")]
-        Peru,
+        PE,
 
         [Description("Philippines")]
-        Philippines,
+        PH,
 
         [Description("Poland")]
-        Poland,
+        PL,
 
         [Description("Portugal")]
-        Portugal,
+        PT,
 
         [Description("Qatar")]
-        Qatar,
+        QA,
 
         [Description("Romania")]
-        Romania,
+        RO,
 
         [Description("Russia")]
-        Russia,
+        RU,
 
         [Description("Rwanda")]
-        Rwanda,
+        RW,
 
         [Description("Saint Kitts and Nevis")]
-        SaintKittsAndNevis,
+        KN,
 
         [Description("Saint Lucia")]
-        SaintLucia,
+        LC,
 
         [Description("Saint Vincent and the Grenadines")]
-        SaintVincentAndTheGrenadines,
+        VC,
 
         [Description("Samoa")]
-        Samoa,
+        WS,
 
         [Description("San Marino")]
-        SanMarino,
+        SM,
 
         [Description("Sao Tome and Principe")]
-        SaoTomeAndPrincipe,
+        ST,
 
         [Description("Saudi Arabia")]
-        SaudiArabia,
+        SA,
 
         [Description("Senegal")]
-        Senegal,
+        SN,
 
         [Description("Serbia")]
-        Serbia,
+        RS,
 
         [Description("Seychelles")]
-        Seychelles,
+        SC,
 
         [Description("Sierra Leone")]
-        SierraLeone,
+        SL,
 
         [Description("Singapore")]
-        Singapore,
+        SG,
 
         [Description("Slovakia")]
-        Slovakia,
+        SK,
 
         [Description("Slovenia")]
-        Slovenia,
+        SI,
 
         [Description("Solomon Islands")]
-        SolomonIslands,
+        SB,
 
         [Description("Somalia")]
-        Somalia,
+        SO,
 
         [Description("South Africa")]
-        SouthAfrica,
+        ZA,
 
         [Description("South Korea")]
-        SouthKorea,
+        KR,
 
         [Description("South Sudan")]
-        SouthSudan,
+        SS,
 
         [Description("Spain")]
-        Spain,
+        ES,
 
         [Description("Sri Lanka")]
-        SriLanka,
+        LK,
 
         [Description("Sudan")]
-        Sudan,
+        SD,
 
         [Description("Suriname")]
-        Suriname,
+        SR,
 
         [Description("Sweden")]
-        Sweden,
+        SE,
 
         [Description("Switzerland")]
-        Switzerland,
+        CH,
 
         [Description("Syria")]
-        Syria,
+        SY,
 
         [Description("Taiwan")]
-        Taiwan,
+        TW,
 
         [Description("Tajikistan")]
-        Tajikistan,
+        TJ,
 
         [Description("Tanzania")]
-        Tanzania,
+        TZ,
 
         [Description("Thailand")]
-        Thailand,
+        TH,
 
         [Description("Togo")]
-        Togo,
+        TG,
 
         [Description("Tonga")]
-        Tonga,
+        TO,
 
         [Description("Trinidad and Tobago")]
-        TrinidadAndTobago,
+        TT,
 
         [Description("Tunisia")]
-        Tunisia,
+        TN,
 
         [Description("Turkey")]
-        Turkey,
+        TR,
 
         [Description("Turkmenistan")]
-        Turkmenistan,
+        TM,
 
         [Description("Tuvalu")]
-        Tuvalu,
+        TV,
 
         [Description("Uganda")]
-        Uganda,
+        UG,
 
         [Description("Ukraine")]
-        Ukraine,
+        UA,
+
         [Description("United Arab Emirates")]
-        UnitedArabEmirates,
+        AE,
 
         [Description("Uruguay")]
-        Uruguay,
+        UY,
 
         [Description("Uzbekistan")]
-        Uzbekistan,
+        UZ,
 
         [Description("Vanuatu")]
-        Vanuatu,
+        VU,
 
         [Description("Vatican City")]
-        VaticanCity,
+        VA,
 
         [Description("Venezuela")]
-        Venezuela,
+        VE,
 
         [Description("Vietnam")]
-        Vietnam,
+        VN,
 
         [Description("Yemen")]
-        Yemen,
+        YE,
 
         [Description("Zambia")]
-        Zambia,
+        ZM,
 
         [Description("Zimbabwe")]
-        Zimbabwe
+        ZW
     }
 }
 
