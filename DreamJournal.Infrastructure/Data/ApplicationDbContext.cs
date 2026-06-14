@@ -34,26 +34,26 @@ namespace DreamJournal.Infrastructure.Identity
                 .HasMaxLength(30);
 
             // Force everything to uppercase
-            foreach(var entityType in builder.Model.GetEntityTypes())
-            {
-                // MCNOTE: CRITICAL! STOP ALL AUTOMATIC UPPERCASE FOR ANYTHING MANAGED BY ASP!!!
-                if(entityType.GetTableName()!.StartsWith("AspNet"))
-                {
-                    // do not convert!
-                    continue;
-                }
+            //foreach (var entityType in builder.Model.GetEntityTypes())
+            //{
+            //    // MCNOTE: CRITICAL! STOP ALL AUTOMATIC UPPERCASE FOR ANYTHING MANAGED BY ASP!!!
+            //    if (entityType.GetTableName()!.StartsWith("AspNet"))
+            //    {
+            //        // do not convert!
+            //        continue;
+            //    }
 
-                foreach(var property in entityType.GetProperties())
-                {
-                    if (property.ClrType == typeof(string) && !property.IsKey())
-                    {
-                        property.SetValueConverter(new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<string, string>(
-                            v => v != null ? v.ToUpper() : null!, 
-                            v => v
-                        ));
-                    }
-                }
-            }
+            //    foreach (var property in entityType.GetProperties())
+            //    {
+            //        if (property.ClrType == typeof(string) && !property.IsKey())
+            //        {
+            //            property.SetValueConverter(new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<string, string>(
+            //                v => v != null ? v.ToUpper() : null!,
+            //                v => v
+            //            ));
+            //        }
+            //    }
+            //}
         }
     }
 

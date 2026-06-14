@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace DreamJournal.Infrastructure.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class RandomUserNameGenerateTest2 : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

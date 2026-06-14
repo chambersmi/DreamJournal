@@ -51,7 +51,7 @@
                 <InputText 
                     @bind-Value="Input.CustomUserName"    
                     Name="Input.CustomUserName"
-                    id="Input.FirstName" 
+                    id="Input.CustomUserName"
                     class="form-control" 
                     aria-required="true" 
                     placeholder="User Name" 
@@ -192,7 +192,7 @@
         }
 
         //await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-        await UserStore.SetUserNameAsync(user, Input.CustomUserName, CancellationToken.None);
+        await UserStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
         var emailStore = GetEmailStore();
         await emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
@@ -249,30 +249,30 @@
     private async Task<string> GenerateUniqueAnonymousUsernameAsync()
     {
         string[] Adjectives = { "Sleepy",
-              "Tired",
-              "Dopey",
-              "Hungry",
-              "Grumpy",
-              "Happy",
-              "Bashful",
-              "Chill",
-              "Lazy",
-              "Clumsy",
-              "Cranky",
-              "Gloomy" 
+            "Tired",
+            "Dopey",
+            "Hungry",
+            "Grumpy",
+            "Happy",
+            "Bashful",
+            "Chill",
+            "Lazy",
+            "Clumsy",
+            "Cranky",
+            "Gloomy" 
     };
 
         string[] AnimalNouns = {
-          "Badger",
-          "Beaver",
-          "Ferret",
-          "Gopher",
-          "Otter",
-          "Porcupine",
-          "Raccoon",
-          "Squirrel",
-          "Weasel",
-          "Wombat"
+            "Badger",
+            "Beaver",
+            "Ferret",
+            "Gopher",
+            "Otter",
+            "Porcupine",
+            "Raccoon",
+            "Squirrel",
+            "Weasel",
+            "Wombat"
     };
 
         Random random = new();
@@ -286,7 +286,7 @@
         {
             string adjective = Adjectives[random.Next(Adjectives.Length)];
             string animal = AnimalNouns[random.Next(AnimalNouns.Length)];
-            int number = random.Next(1, MAX_USER_NUMBER); // 1 to 10000
+            int number = random.Next(1, MAX_USER_NUMBER);
 
             generatedName = $"{adjective}{animal}{number}";
 
@@ -332,7 +332,7 @@
 
     private sealed class InputModel
     {
-        public bool IsGeneratedName {get;set;} = true;
+        //public bool IsGeneratedName {get;set;} = true;
 
         [Required]
         [EmailAddress]
