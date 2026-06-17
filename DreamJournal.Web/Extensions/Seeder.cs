@@ -5,28 +5,26 @@ namespace DreamJournal.Web.Extensions
 {
     public static class Seeder
     {
-        public static async Task SeedRolesAndAdminAsync(WebApplication app)
+        public static async Task SeedRolesAndAdminAsync(
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
-            using var scope = app.Services.CreateScope();
-            
-            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-
-            string[] roleNames = { "Admin", "User" };
-
-            // Create system roles
-            foreach(var roleName in roleNames)
+            foreach(var roleName in AppRoles.AllRoles)
             {
-                var roleExist = await roleManager.RoleExistsAsync(roleName);
-
-                if(!roleExist)
+                if(!await roleManager.RoleExistsAsync(roleName))
                 {
                     await roleManager.CreateAsync(new IdentityRole(roleName));
                 }
             }
 
-            string adminEmail = "mjch.admin@gmail.com";
+            await SeedDefaultAdminAsync(userManager);
+        }
 
+        public static async Task SeedDefaultAdminAsync(
+            UserManager<ApplicationUser> userManager)
+        {
+            
+            string adminEmail = "mjch.admin@gmail.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
 
             if(adminUser == null)
@@ -49,7 +47,7 @@ namespace DreamJournal.Web.Extensions
 
                 if(createAdmin.Succeeded)
                 {
-                    await userManager.AddToRoleAsync(newAdmin, "Admin");
+                    await userManager.AddToRoleAsync(newAdmin, AppRoles.Admin);
                 }
                 else
                 {
@@ -57,9 +55,6 @@ namespace DreamJournal.Web.Extensions
                     Console.WriteLine("Error!\n\n" + errors);
                 }
             }
-
-
-
         }
     }
 }

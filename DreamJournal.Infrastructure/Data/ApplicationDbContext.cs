@@ -1,4 +1,5 @@
 using DreamJournal.Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -33,31 +34,28 @@ namespace DreamJournal.Infrastructure.Identity
                 .HasConversion<string>()
                 .HasMaxLength(30);
 
-            // Force everything to uppercase
-            //foreach (var entityType in builder.Model.GetEntityTypes())
-            //{
-            //    // MCNOTE: CRITICAL! STOP ALL AUTOMATIC UPPERCASE FOR ANYTHING MANAGED BY ASP!!!
-            //    if (entityType.GetTableName()!.StartsWith("AspNet"))
-            //    {
-            //        // do not convert!
-            //        continue;
-            //    }
+            ForceUppercaseDataIntoDatabase(builder);
 
-            //    foreach (var property in entityType.GetProperties())
-            //    {
-            //        if (property.ClrType == typeof(string) && !property.IsKey())
-            //        {
-            //            property.SetValueConverter(new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<string, string>(
-            //                v => v != null ? v.ToUpper() : null!,
-            //                v => v
-            //            ));
-            //        }
-            //    }
-            //}
+        }
+        protected void ForceUppercaseDataIntoDatabase(ModelBuilder builder)
+        {
+            foreach (var entityType in builder.Model.GetEntityTypes())
+            {
+                if (entityType.ClrType.Namespace != null &&
+                    entityType.ClrType.Namespace.StartsWith("DreamJournal.Domain"))
+                {
+                    foreach (var property in entityType.GetProperties())
+                    {
+                        if (property.ClrType == typeof(string) && !property.IsKey())
+                        {
+                            property.SetValueConverter(new Microsoft.EntityFrameworkCore.Storage.ValueConversion.ValueConverter<string, string>(
+                                v => v != null ? v.ToUpper() : null!,
+                                v => v
+                            ));
+                        }
+                    }
+                }
+            }
         }
     }
-
-    
-    
-
 }

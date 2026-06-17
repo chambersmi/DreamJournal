@@ -6,4 +6,5 @@
   <Project Path="DreamJournal.Domain/DreamJournal.Domain.csproj" />
   <Project Path="DreamJournal.Infrastructure/DreamJournal.Infrastructure.csproj" />
   <Project Path="DreamJournal.Web/DreamJournal.Web.csproj" />
+  <Project Path="Shared/Shared.csproj" Id="932bf995-0597-49dd-b6f2-1a1c76559bd6" />
 </Solution>
