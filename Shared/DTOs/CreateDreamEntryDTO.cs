@@ -15,6 +15,7 @@ namespace Shared.DTOs
         [StringLength(100, ErrorMessage = "Keep the title under 100 characters.")]
 
         public string? Subject { get; set; }
+        public string Title { get; set; } = string.Empty;
         public string? NotablePeople { get; set; }
 
         [Required(ErrorMessage = "Please select the overall mood of the dream.")]

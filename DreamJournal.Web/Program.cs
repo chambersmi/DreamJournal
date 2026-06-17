@@ -1,4 +1,6 @@
+using DreamJournal.Domain.Interfaces;
 using DreamJournal.Infrastructure.Identity;
+using DreamJournal.Infrastructure.Repositories;
 using DreamJournal.Web.Components;
 using DreamJournal.Web.Components.Account;
 using DreamJournal.Web.Extensions;
@@ -33,6 +35,11 @@ namespace DreamJournal.Web
 
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+            // Registering Services
+            builder.Services.AddScoped<IDreamRepository, DreamRepository>();
+
+
 
             builder.Services.AddIdentityCore<ApplicationUser>(options =>
                 {

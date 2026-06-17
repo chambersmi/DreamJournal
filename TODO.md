@@ -15,3 +15,5 @@ chmod 600 dreamjournal.db
 chown www-data:www-data dreamjournal.db
 
 make state abbreviations in enum
+
+MAKE "TAGS" AND AFTER A NAME GETS ENTERED IN NOTABLE PEOPLE, HAVE IT COME UP/AUTOCOMPLETE QUICKLY

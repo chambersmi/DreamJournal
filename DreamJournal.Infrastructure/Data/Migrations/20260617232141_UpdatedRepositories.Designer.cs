@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DreamJournal.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260614182435_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260617232141_UpdatedRepositories")]
+    partial class UpdatedRepositories
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

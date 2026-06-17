@@ -17,7 +17,8 @@ namespace DreamJournal.Domain.Entities
         public DreamMoodEnum DreamMood { get; set; }
 
         public string? Description { get; set; }
-        public SongReference? Song { get; set; }
+        public int? SongReferenceId { get; set; }
+        public SongReference? SongReference { get; set; }
 
     }
 }
